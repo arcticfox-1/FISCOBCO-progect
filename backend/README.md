@@ -4,10 +4,10 @@ Spring Boot + FISCO BCOS Java SDK 的业务服务层，负责链上链下数据�
 
 ## 技术栈
 
-- Java 17 / Spring Boot 2.7.x
-- MyBatis-Plus 3.5.x + MySQL 8.0
+- Java 8 / Spring Boot 2.7.18
+- MyBatis-Plus 3.5.3.1 + MySQL 8.0
 - Redis（缓存、登录态）
-- `fisco-bcos-java-sdk` 2.9.x
+- `fisco-bcos-java-sdk` 2.9.1
 
 ## 规划包结构
 
@@ -46,10 +46,13 @@ fisco:
 
 | 服务 | 职责 |
 | --- | --- |
-| `BatchService` | 批次创建，同时写链下明细与链上批次索引 |
-| `TraceService` | 环节记录追加、按批次聚合查询全链路 |
-| `VerifyService` | 用链上哈希与链下原文比对，返回完整性结论 |
-| `QrCodeService` | 生成携带 `batchId` 的溯源码（小程序路径） |
+| `BatchService` | 批次登记，落链下明细 + 上链 + 回执校验 |
+| `TraceService` | 种植/采收/运输/销售记录追加，按批次聚合全链路 |
+| `InspectionService` | 报告上传、SHA-256 计算、质检结论上链 |
+| `DisposalService` | 不合格批次处置，同步链上状态 |
+| `VerifyService` | 用链上摘要与链下文件比对，返回完整性结论 |
+| `ChainTxService` | 交易回执统一处理，失败落库并回滚业务状态 |
+| `QrCodeService` | 生成携带 `batchId` 的溯源码（小程序页面路径） |
 
 ## 本地启动
 
